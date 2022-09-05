@@ -2,15 +2,15 @@ import Avatar from './Avatar'
 import Comment from './Comment'
 import styles from './Post.module.css'
 
-const Post = () => {
+const Post = ({id, author:{avatarUrl, name, role}}) => {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://avatars.githubusercontent.com/u/55398608?v=4"/>
+          <Avatar src={avatarUrl}/>
           <div className={styles.authorInfo}>
-            <strong>Gustavo Seabra</strong>
-            <span>FrontEnd Developer</span>
+            <strong>{name}</strong>
+            <span>{role}</span>
           </div>
         </div>
 
