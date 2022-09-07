@@ -1,10 +1,17 @@
 import {format, formatDistanceToNow } from 'date-fns'
 import  ptBR  from 'date-fns/locale/pt-BR'
+import { useState } from 'react'
 import Avatar from './Avatar'
 import Comment from './Comment'
 import styles from './Post.module.css'
 
+const comments = [
+  1,
+  2,
+]
+
 const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
+  const [comments,setComments] = useState([1,2])
 
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'as' HH:mm'h'", {
     locale:ptBR
@@ -14,6 +21,11 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
     locale: ptBR,
     addSuffix:true
   })
+
+  const handleCreateNewComment = (event) => {
+    event.preventDefault()
+    setComments(prev => [...prev,3])
+  }
 
   return (
     <article className={styles.post}>
@@ -43,7 +55,7 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
           }
         })}
       </div>
-      <form className={styles.commentForm}>
+      <form className={styles.commentForm} onSubmit={handleCreateNewComment}>
         <strong>Deixe seu feedback</strong>
         <textarea 
           placeholder='Deixe um comentario'
@@ -54,9 +66,9 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
       </form>
       
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map(comment => {
+          return <Comment />
+        })}
       </div>
     </article>
   )
