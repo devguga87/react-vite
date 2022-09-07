@@ -27,6 +27,10 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
     setNewCommentText(event.target.value)
   }
 
+  const deleteComment = (comment) => {
+    setComments(prev => prev.filter(element => element !== comment))
+  }
+
   const handleCreateNewComment = (event) => {
     event.preventDefault()
     setComments(prev => [...prev,newCommentText])
@@ -75,7 +79,7 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
       
       <div className={styles.commentList}>
         {comments.map(comment => {
-          return <Comment key={comment} content={comment} />
+          return <Comment key={comment} content={comment} onDeleteComment={deleteComment}/>
         })}
       </div>
     </article>
