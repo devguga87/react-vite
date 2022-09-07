@@ -11,7 +11,8 @@ const comments = [
 ]
 
 const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
-  const [comments,setComments] = useState([1,2])
+  const [comments,setComments] = useState(['Post muito bacana hein?'])
+  const [newCommentText, setNewCommentText] = useState('')
 
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'as' HH:mm'h'", {
     locale:ptBR
@@ -22,9 +23,14 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
     addSuffix:true
   })
 
+  const handleNewCommentChange = (event) => {
+    setNewCommentText(event.target.value)
+  }
+
   const handleCreateNewComment = (event) => {
     event.preventDefault()
-    setComments(prev => [...prev,3])
+    setComments(prev => [...prev,newCommentText])
+    setNewCommentText('')
   }
 
   return (
@@ -59,6 +65,8 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
         <strong>Deixe seu feedback</strong>
         <textarea 
           placeholder='Deixe um comentario'
+          value={newCommentText}
+          onChange={handleNewCommentChange}
         />
         <footer>
           <button type='submit'>Publicar</button>
@@ -67,7 +75,7 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
       
       <div className={styles.commentList}>
         {comments.map(comment => {
-          return <Comment />
+          return <Comment content={comment} />
         })}
       </div>
     </article>
