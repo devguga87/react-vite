@@ -54,10 +54,10 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
       <div className={styles.content}>
         {content.map(item => {
           if(item.type === 'paragraph'){
-            return <p>{item.content}</p>
+            return <p key={item.content}>{item.content}</p>
           }
           if(item.type === 'link'){
-            return  <p><a>{item.content}</a></p>
+            return  <p key={item.content}><a>{item.content}</a></p>
           }
         })}
       </div>
@@ -75,7 +75,7 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
       
       <div className={styles.commentList}>
         {comments.map(comment => {
-          return <Comment content={comment} />
+          return <Comment key={comment} content={comment} />
         })}
       </div>
     </article>
