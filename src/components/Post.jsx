@@ -5,14 +5,11 @@ import Avatar from './Avatar'
 import Comment from './Comment'
 import styles from './Post.module.css'
 
-const comments = [
-  1,
-  2,
-]
-
 const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
   const [comments,setComments] = useState(['Post muito bacana hein?'])
   const [newCommentText, setNewCommentText] = useState('')
+
+  const formIsValid = newCommentText.trim().length !== 0
 
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'as' HH:mm'h'", {
     locale:ptBR
@@ -33,7 +30,13 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
 
   const handleCreateNewComment = (event) => {
     event.preventDefault()
+
+    if(!formIsValid){
+      return 
+    }
+
     setComments(prev => [...prev,newCommentText])
+
     setNewCommentText('')
   }
 
@@ -73,7 +76,7 @@ const Post = ({author:{avatarUrl, name, role}, publishedAt, content}) => {
           onChange={handleNewCommentChange}
         />
         <footer>
-          <button type='submit'>Publicar</button>
+          <button type='submit' disabled={!formIsValid}>Publicar</button>
         </footer>
       </form>
       
